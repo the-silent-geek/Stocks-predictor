@@ -18,7 +18,7 @@ import yfinance as yf
 from sklearn.preprocessing import MinMaxScaler as mms
 import numpy as np
 
-start_date="2019-01-01"
+start_date="2019-01-02"
 end_date="2024-02-02"
 data_1=yf.download("AAPL", start=start_date, end=end_date)
 
