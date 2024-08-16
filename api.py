@@ -4,35 +4,29 @@ import traceback
 import numpy as np
 import json
 from prediction import pred
-from base_series import base_series_test
+from base_series import base_series_test, test
+from fastapi import FastAPI, Body
+from pydantic import BaseModel
+from typing import Any
 
-app = Flask(__name__)
+class Item(BaseModel):
+    Days: int
 
-@app.route('/predict', methods=['POST'])
-def predict():
+app = FastAPI()
+
+@app.post('/predict')
+async def create_item(item: Item = Body(...))-> Any:
+
     if model:
         try:
-            b = request.json
-            series = pred(b[0]["Days"], base_series_test)
+            b = item.Days
+            series = pred(b, base_series_test, test)
             
-            l = []
-            for i in series[0]:
-                l.append(i[0])
-            
-            print(l)             
-            return jsonify(l)
+            l = [i for i in series]
+                        
+            return {"result":l}
         except:
             return jsonify({'trace': traceback.format_exc()})
-    else:
-        print("DF")
-
-if __name__ == '__main__':
-    try:
-        port = int(sys.argv[1])
-    except:
-        port = 8000
         
 model = joblib.load("model.pkl")
 print("loaded")    
-
-app.run(port=port, debug=True)
