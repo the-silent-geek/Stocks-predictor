@@ -11,4 +11,4 @@ base_series_test = data_1['Open'].tolist()
 base_series_test = np.array(base_series_test[:50])
 base_series_test = scaler.fit_transform(base_series_test.reshape(-1,1))
 base_series_test = base_series_test.reshape(1,50,1)
-test = []
+# print(base_series_test)
