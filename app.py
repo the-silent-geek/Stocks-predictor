@@ -11,18 +11,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
-    labels = [
-        'January',
-        'February',
-        'March',
-        'April',
-        'May',
-        'June',
-    ]
- 
-    data = [0, 10, 15, 8, 22, 18, 25]
- 
-    return render_template(template_name_or_list='index.html', data=data, labels=labels)
+    return render_template(template_name_or_list='index.html')
 
 @app.route('/predict', methods=['POST'])
 def predict():
@@ -44,15 +33,10 @@ def predict():
 def results():
     data = request.args.get('data')
     data = json.loads(data)
-    labels = [
-        'January',
-        'February',
-        'March',
-        'April',
-        'May',
-        'June',
+    label1 = [
+        1,2,3,4,5,6,7,8,9,10
     ]
-    return render_template(template_name_or_list='results.html', data=data, label=labels)
+    return render_template(template_name_or_list='results.html', data=data, label=label1)
     #     return jsonify({'error':'No data provided'})
 model = joblib.load("model.pkl")
 print("loaded")    
